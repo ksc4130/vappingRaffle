@@ -1,0 +1,17 @@
+{
+  "name": "VappingRaffle",
+  "version": "0.0.0",
+  "description": "Vapping Raffle",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Kyle Curren",
+  "license": "BSD-2-Clause",
+    "private": true,
+    "dependencies": {
+        "express.io": "*",
+        "ejs": "*"
+    }
+}

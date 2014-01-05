@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/content/css/bootstrap-theme.min.css" rel="stylesheet">
+    <title></title>
+</head>
+<body>
+<article data-bind="style: {'display': loaded() ? 'block' : 'none'}" style="display: none;" class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- ko foreach: notifications -->
+            <div data-bind="css: {'alert-danger': isError}" class="alert alert-dismissable">
+                <button data-bind="click: $root.removeNotification" type="button" class="close"  aria-hidden="true">&times;</button>
+                <strong>Error!</strong> {{ msg }}.
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- ko ifnot: isAuth -->
+    <div class="row">
+        <div class="col-lg-12">
+            <form role="form" data-bind="with: loginVm, event: {'submit': $root.login}">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input data-bind="live: email" type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input data-bind="live: password" type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Let me in</button>
+            </form>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: isAuth -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h5>Accepting for: {{time}} sec.</h5>
+        </div>
+        <div class="col-lg-12">
+            <button type="button" data-bind="click: selectWinners" class="btn btn-default">Select Winners</button>
+            <input type="text" data-bind="numeric: numberOfWinners">
+            <button type="button" data-bind="click: acceptEntries" class="btn btn-default">Accept Entries</button>
+            <input type="text" placeholder="seconds" data-bind="numeric: acceptEntriesTime">
+            <input type="text" placeholder="question" data-bind="live: question">
+            <div class="btn-group">
+                <button data-bind="click: resetRaffle" type="button" class="btn btn-default">Reset</button>
+                <!-- ko ifnot: isShowWinners -->
+                <button data-bind="click: showWinners" type="button" class="btn btn-default">Show Winners</button>
+                <!-- /ko -->
+                <!-- ko if: isShowWinners -->
+                <button data-bind="click: showAll" type="button" class="btn btn-default">Show All</button>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>User Name</th>
+                    <th>Address</th>
+                    <th>Answer</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: filtered">
+            <tr data-bind="css: {'success': isWinner}">
+                <td>{{email}}</td>
+                <td>{{userName}}</td>
+                <td>{{address}}</td>
+                <td>{{answer}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- /ko -->
+</article>
+<script src="/scripts/jquery-2.0.3.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/knockout.js"></script>
+<script src="/scripts/knockout.punches.min.js"></script>
+<script src="/scripts/knockout.validation.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app/admin.js"></script>
+</body>
+</html>

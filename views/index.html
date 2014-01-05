@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/content/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!--<link href="/content/theme/assets/css/font-awesome.min.css" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <!--<link href="/content/theme/assets/css/main.css" rel="stylesheet">-->
+    <title></title>
+    <style>
+        .flex-video {
+            position: relative;
+            padding-top: 25px;
+            padding-bottom: 67.5%;
+            height: 0;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .flex-video-outer {
+            width: 80%;
+            float: left;
+        }
+
+        .flex-video.widescreen { padding-bottom: 57.25%; }
+        .flex-video.vimeo { padding-top: 0; }
+
+        .flex-video iframe,
+        .flex-video object,
+        .flex-video embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .chat {
+            position: relative;
+            padding-top: 25px;
+            padding-bottom: 228.5%;
+            height: 0;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .chat-outer {
+            width: 20%;
+            float: right;
+        }
+
+        .chat iframe,
+        .chat object,
+        .chat embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 768px) {
+
+
+        }
+
+        @media (min-width: 970px) {
+            .bigClearPaddingLeft {
+                padding-left: 0;
+            }
+        }
+
+        @media (max-width: 970px) {
+            .flex-video { padding-top: 0; }
+            .flex-video-outer {
+                float: none;
+                width: 100%;
+            }
+            .chat {
+                padding-top: 0;
+                padding-bottom: 67.5%;
+            }
+            .chat-outer {
+                display: none;
+                float: none;
+                width: 100%;
+            }
+            .entries {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <article data-bind="style: {'display': loaded() ? 'block' : 'none'}" style="display: none; padding: 20px;" >
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- ko foreach: notifications -->
+                <div data-bind="css: {'alert-danger': isError, 'alert-success': isSuccess}" class="alert alert-dismissable">
+                    <button data-bind="click: $root.removeNotification" type="button" class="close"  aria-hidden="true">&times;</button>
+                    <strong>Error!</strong> {{ msg }}.
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 hidden-sm hidden-xs" style="padding-right: 5px;">
+                <!-- ko if: isAccepting -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5>Accepting for: {{time}} sec.</h5>
+                        <form role="form" data-bind="with: regVm, event: {'submit': $root.register}">
+                            <div class="form-group" style="margin-bottom: 5px;">
+                                <!--<label for="email">Email address</label>-->
+                                <input data-bind="live: email" type="email" class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5px;">
+                                <!--<label for="chatName">User Name</label>-->
+                                <input data-bind="live: userName" type="text" class="form-control" id="chatName" placeholder="Chat Name">
+                            </div>
+                            <!-- ko if: $root.question -->
+                            <div class="form-group" style="margin-bottom: 5px;">
+                                <!--<label for="yearsVapping">Years Vapping</label>-->
+                                <input data-bind="live: answer, attr: {'placeholder': $root.question}" type="text" class="form-control" id="yearsVapping">
+                            </div>
+                            <!-- /ko -->
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="height: 0; padding-top: 175%; margin-top: 10px;">
+                            <div style="overflow-y: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;">
+                                <h3>Entries</h3>
+                                <table class="table">
+                                    <tbody data-bind="foreach: filtered">
+                                    <tr data-bind="css: {'success': isWinner}">
+                                        <td>{{userName}} {{isWinner}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!--<ul data-bind="foreach: entries" class="list-group">-->
+                            <!--<li class="list-group-item success">{{ userName }}</li>-->
+                        <!--</ul>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 bigClearPaddingLeft">
+                <div class="flex-video-outer" style="">
+                    <div class="flex-video widescreen" style="margin: 0 auto;text-align:center;">
+                        <iframe src="http://vaughnlive.tv/embed/video/novabroadcastings?viewers=true&amp;watermark=left&amp;autoplay=true"></iframe>
+                    </div>
+                </div>
+                <div class="chat-outer hidden-sm hidden-xs">
+                    <div class="chat" style="margin: 0 auto;text-align:center;">
+                        <iframe src="http://vaughnlive.tv/embed/chat/novabroadcastings"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+<script src="/scripts/jquery-2.0.3.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/knockout.js"></script>
+<script src="/scripts/knockout.punches.min.js"></script>
+<script src="/scripts/knockout.validation.min.js"></script>
+<script src="/scripts/arrayUtils.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app/index.js"></script>
+</body>
+</html>
