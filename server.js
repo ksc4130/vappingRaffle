@@ -25,8 +25,11 @@ app.use(express.static(__dirname + '/public'));
 
 // Session is automatically setup on initial request.
 app.get('/', function(req, res) {
-    req.session.isAuth = false;
-    res.render('index.html');
+    if(req.session)
+        req.session.isAuth = false;
+    req.session.save(function() {
+        res.render('index.html');
+    });
 });
 
 app.get('/admin', function(req, res) {
