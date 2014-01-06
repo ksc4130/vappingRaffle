@@ -37,6 +37,7 @@ var raffle = (function () {
         that.vm.regVm().answer(null);
         that.vm.question('');
         that.vm.isShowWinners(false);
+        that.vm.isRegistered(false);
     });
 
     that.io.on('time', function (data) {
