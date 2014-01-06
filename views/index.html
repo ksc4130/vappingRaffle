@@ -91,7 +91,7 @@
                 display: none;
             }
         }
-        
+
     </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -113,6 +113,7 @@
             </div>
         </div>
         <div class="row">
+            <!-- ko if: isShowEntries -->
             <div class="col-lg-1 col-md-1 col-sm-1 hidden-sm hidden-xs" style="padding-right: 5px;">
                 <!-- ko if: isAccepting -->
                 <div class="row">
@@ -142,11 +143,11 @@
                     <div class="col-lg-12">
                         <div style="height: 0; padding-top: 175%; margin-top: 10px;">
                             <div style="overflow-y: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;">
-                                <h3>Entries</h3>
+                                <h3 data-bind="text: $root.isShowWinners() ? 'Winners' : 'Entries'"></h3>
                                 <table class="table">
                                     <tbody data-bind="foreach: filtered">
                                     <tr data-bind="css: {'success': isWinner}">
-                                        <td>{{userName}} {{isWinner}}</td>
+                                        <td>{{userName}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -159,7 +160,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 bigClearPaddingLeft">
+            <!-- /ko -->
+            <div data-bind="css: {'col-lg-11': isShowEntries, 'col-md-11': isShowEntries, 'col-lg-12': !isShowEntries(), 'col-md-12': !isShowEntries()}" class="col-lg-11 col-md-11 col-sm-12 col-xs-12 bigClearPaddingLeft">
                 <div class="flex-video-outer" style="">
                     <div class="flex-video widescreen" style="margin: 0 auto;text-align:center;">
                         <iframe src="http://vaughnlive.tv/embed/video/novabroadcastings?viewers=true&amp;watermark=left&amp;autoplay=true"></iframe>

@@ -8,6 +8,8 @@ var util = require('util')
     , adminPassword = 'test'
     , admins = []
     , isEnding = false
+    , isShowEntries = false
+    , isShowWinners = false
     , curTime = 0
     , timerId
     , isAccepting = false;
@@ -52,7 +54,7 @@ app.io.route('login', function(req) {
     }
 
     req.session.save(function() {
-        req.io.emit('init', {isAuth: isAuth, entries: isAuth ? entries : []});
+        req.io.emit('init', {isAuth: isAuth, entries: isAuth ? entries : [], isShowEntries: isShowEntries, isShowWinners: isShowWinners});
     });
 });
 
@@ -75,6 +77,8 @@ app.io.route('endRaffle', function (req) {
         if(!item.isWinner)
             people.push(item);
     });
+
+    req.data = req.data <= people.length ? req.data : people.length;
 
     for(var i = 0; i < req.data; i++) {
         (function () {
@@ -116,11 +120,22 @@ app.io.route('reset', function (req) {
     resetRaffle();
 });
 
+app.io.route('showEntries', function (req) {
+    if(!req.session.isAuth) {
+        req.io.socket.emit('notify', cleanNotifictaion({isError: true, msg: 'Sorry you can\'t do that.'}));
+        return;
+    }
+    console.log('show entries', req.data);
+    isShowEntries = req.data;
+    app.io.broadcast('showEntries', req.data);
+});
+
 app.io.route('showWinners', function (req) {
     if(!req.session.isAuth) {
         req.io.socket.emit('notify', cleanNotifictaion({isError: true, msg: 'Sorry you can\'t do that.'}));
         return;
     }
+    isShowWinners = true;
     app.io.broadcast('showWinners');
 });
 
@@ -129,6 +144,7 @@ app.io.route('showAll', function (req) {
         req.io.socket.emit('notify', cleanNotifictaion({isError: true, msg: 'Sorry you can\'t do that.'}));
         return;
     }
+    isShowWinners = false;
     app.io.broadcast('showAll');
 });
 
@@ -162,6 +178,8 @@ app.io.route('ready', function(req) {
             isAuth: req.session.isAuth,
             entries: cleaned,
             email: entry ? entry.email : null,
+            isShowEntries: isShowEntries,
+            isShowWinners: isShowWinners,
             userName: entry ? entry.userName : null
         });
     });

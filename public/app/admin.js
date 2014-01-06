@@ -59,6 +59,11 @@ var raffle = (function () {
             first.isWinner(true);
     });
 
+
+    that.io.on('showEntries', function (data) {
+        that.vm.isShowEntries(data);
+    });
+
     that.io.on('showWinners', function (data) {
         that.vm.isShowWinners(true);
     });
@@ -75,6 +80,8 @@ var raffle = (function () {
             item.answer = ko.observable(item.answer || null);
             return item;
         }));
+        that.vm.isShowWinners(data.isShowWinners);
+        that.vm.isShowEntries(data.isShowEntries);
         that.vm.loaded(true);
     });
 
@@ -105,6 +112,7 @@ var raffle = (function () {
         self.question = ko.observable();
 
         self.isShowWinners = ko.observable(false);
+        self.isShowEntries = ko.observable(false);
 
         self.filtered = ko.computed(function () {
             var arr = self.entries();
@@ -146,6 +154,14 @@ var raffle = (function () {
 
         self.showWinners = function () {
             that.io.emit('showWinners');
+        };
+
+        self.showEntries = function () {
+            that.io.emit('showEntries', true);
+        };
+
+        self.hideEntries = function () {
+            that.io.emit('showEntries', false);
         };
 
         self.showAll = function () {

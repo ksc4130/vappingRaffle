@@ -54,6 +54,12 @@
                 <!-- ko if: isShowWinners -->
                 <button data-bind="click: showAll" type="button" class="btn btn-default">Show All</button>
                 <!-- /ko -->
+                <!-- ko ifnot: isShowEntries -->
+                <button data-bind="click: showEntries" type="button" class="btn btn-default">Show Entries</button>
+                <!-- /ko -->
+                <!-- ko if: isShowEntries -->
+                <button data-bind="click: hideEntries" type="button" class="btn btn-default">Hide Entries</button>
+                <!-- /ko -->
             </div>
         </div>
     </div>
