@@ -242,6 +242,8 @@ function cleanNotifictaion (notifictaion) {
 }
 
 function startTimer(time) {
+    if(timerId)
+        clearInterval(timerId);
     curTime = time;
     isAccepting = true;
     app.io.broadcast('time', curTime);
