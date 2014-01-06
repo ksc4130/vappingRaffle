@@ -119,7 +119,7 @@ var raffle = (function () {
             var arr = self.entries();
             return ko.utils.arrayFilter(arr, function (item) {
                 return !self.isShowWinners () || item.isWinner();
-            });
+            }).sort(function(left, right) { return left.userName.toLowerCase() == right.userName.toLowerCase() ? 0 : (left.userName.toLowerCase() < right.userName.toLowerCase() ? -1 : 1) });
         });
 
         self.loginVm = ko.validatedObservable({

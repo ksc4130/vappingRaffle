@@ -146,6 +146,13 @@
                     </div>
                 </div>
                 <!-- /ko -->
+                <!-- ko ifnot: isAccepting -->
+                <!-- ko if: $root.isRegistered -->
+                <div class="row col-lg-12">
+                    <h5>Registered with: <span class="text-success">{{regVm().userName}}</span></h5>
+                </div>
+                <!-- /ko -->
+                <!-- /ko -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div style="height: 0; padding-top: 175%; margin-top: 10px;">
