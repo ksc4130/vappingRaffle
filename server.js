@@ -209,7 +209,7 @@ app.io.route('register', function(req) {
         return;
     } else {
         entries.push(entry);
-
+        req.io.emit('registered');
         req.io.room('admins').broadcast('addEntryAdmin', entry);
         req.io.broadcast('addEntry', cleanEntry(entry));
         req.io.emit('addEntry', cleanEntry(entry));
@@ -262,7 +262,7 @@ function startTimer(time) {
 function resetRaffle() {
     curTime = 0;
     isShowWinners = false;
-    
+
     if(isAccepting)
         app.io.broadcast('stopAccepting');
 
