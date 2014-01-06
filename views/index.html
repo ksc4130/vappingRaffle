@@ -167,6 +167,9 @@
                                     </tbody>
                                 </table>
                                 <!-- /ko -->
+                                <!-- ko if: $root.entries().length <= 0 -->
+                                <h3><span data-bind="text: $root.isShowWinners() ? 'No Winners' : 'No Entries'"></span></h3>
+                                <!-- /ko -->
                             </div>
                         </div>
 
