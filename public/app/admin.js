@@ -49,6 +49,7 @@ var raffle = (function () {
     that.io.on('reset', function (data) {
         that.vm.entries([]);
         that.vm.question('');
+        that.vm.isShowWinners(false);
     });
 
     that.io.on('winner', function (data) {

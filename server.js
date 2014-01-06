@@ -261,7 +261,8 @@ function startTimer(time) {
 
 function resetRaffle() {
     curTime = 0;
-
+    isShowWinners = false;
+    
     if(isAccepting)
         app.io.broadcast('stopAccepting');
 
